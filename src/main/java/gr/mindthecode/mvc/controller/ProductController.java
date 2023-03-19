@@ -30,7 +30,7 @@ public class ProductController {
         model.addAttribute("products", service.getProducts(productPrice, page, size, sort));
         model.addAttribute("sort", sort);
         model.addAttribute("productDescription ", productPrice );
-        return "products";
+        return "product";
     }
 
     @GetMapping("/create")
