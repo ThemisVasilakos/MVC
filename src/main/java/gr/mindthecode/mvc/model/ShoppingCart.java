@@ -1,46 +1,44 @@
 package gr.mindthecode.mvc.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.context.annotation.Lazy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 @Entity
 public class ShoppingCart {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer shoppingCartId;
+    @EmbeddedId
+    private ShoppingCartPK id;
 
     @ManyToOne
     @Lazy(false)
+    @MapsId("orders_id")
+    @JsonIgnore
     private Orders order;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "cart_product",
-            joinColumns = @JoinColumn(name = "shopping_cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    @JsonManagedReference
-    private List<Product> products;
+    @ManyToOne
+    @Lazy(false)
+    @MapsId("product_id")
+    @JsonIgnore
+    private Product products;
 
     private Integer quantity;
 
     //Constructor
     public ShoppingCart() {
-        this.products = new ArrayList<>();
     }
 
     //Getters and Setters
 
-    public Integer getShoppingCartId() {
-        return shoppingCartId;
+
+    public ShoppingCartPK getId() {
+        return id;
     }
 
-    public void setShoppingCartId(Integer shoppingCartId) {
-        this.shoppingCartId = shoppingCartId;
+    public void setId(ShoppingCartPK id) {
+        this.id = id;
     }
 
     public Orders getOrder() {
@@ -59,7 +57,12 @@ public class ShoppingCart {
         this.quantity = quantity;
     }
 
-    public void addProduct(Product product){
-        this.products.add(product);
+    public Product getProducts() {
+        return products;
     }
+
+    public void setProducts(Product products) {
+        this.products = products;
+    }
+
 }

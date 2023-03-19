@@ -19,7 +19,7 @@ public class Orders {
 
     private String address;
 
-    @OneToMany(mappedBy = "shoppingCartId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     private Collection<ShoppingCart> orderProducts = new ArrayList<>();
