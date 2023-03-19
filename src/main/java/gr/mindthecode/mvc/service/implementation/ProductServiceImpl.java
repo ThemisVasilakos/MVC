@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
         if (productPrice == null) {
             res = productRepository.findAll(paging);
         } else {
-            res = productRepository.findByPrice(productPrice, paging);
+            res = productRepository.findByProductPrice(productPrice, paging);
         }
 
         return res;
