@@ -1,11 +1,7 @@
 package gr.mindthecode.mvc.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.context.annotation.Lazy;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class ShoppingCart {
@@ -16,21 +12,18 @@ public class ShoppingCart {
 
     @ManyToOne
     @Lazy(false)
+    @MapsId("orders_id")
     private Orders order;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "cart_product",
-            joinColumns = @JoinColumn(name = "shopping_cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    @JsonManagedReference
-    private List<Product> products;
+    @ManyToOne
+    @Lazy(false)
+    @MapsId("product_id")
+    private Product products;
 
     private Integer quantity;
 
     //Constructor
     public ShoppingCart() {
-        this.products = new ArrayList<>();
     }
 
     //Getters and Setters
@@ -59,7 +52,12 @@ public class ShoppingCart {
         this.quantity = quantity;
     }
 
-    public void addProduct(Product product){
-        this.products.add(product);
+    public Product getProducts() {
+        return products;
     }
+
+    public void setProducts(Product products) {
+        this.products = products;
+    }
+
 }

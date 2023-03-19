@@ -21,17 +21,13 @@ public class Product {
     private Double productPrice;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "cart_product",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "shopping_cart_id"))
+    @OneToMany(mappedBy = "shoppingCartId", cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
-    private List<ShoppingCart> shoppingCarts;
+    private Collection<ShoppingCart> orderProducts = new ArrayList<>();
 
     //Constructor
     public Product() {
-        this.shoppingCarts = new ArrayList<>();
     }
 
     //Getters and Setters
@@ -59,11 +55,11 @@ public class Product {
         this.productPrice = productPrice;
     }
 
-    public List<ShoppingCart> getShoppingCarts() {
-        return shoppingCarts;
+    public Collection<ShoppingCart> getOrderProducts() {
+        return orderProducts;
     }
 
-    public void setShoppingCarts(List<ShoppingCart> shoppingCarts) {
-        this.shoppingCarts = shoppingCarts;
+    public void setOrderProducts(Collection<ShoppingCart> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 }

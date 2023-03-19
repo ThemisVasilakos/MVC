@@ -37,8 +37,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         Double totalCost = 0.0;
 
-        ShoppingCart shoppingCart = new ShoppingCart();
-
         ArrayList<ProductQuantity> products = (ArrayList<ProductQuantity>) newOrderDto.getProducts();
         for(int i=0;i<products.size();i++){
             Integer tmp = products.get(i).getProductId();
@@ -50,11 +48,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             Integer quantity = products.get(i).getQuantity();
             totalCost=totalCost + (check.get().getProductPrice() * quantity);
 
+            ShoppingCart shoppingCart = new ShoppingCart();
             shoppingCart.setOrder(order);
-            shoppingCart.addProduct(check.get());
+            shoppingCart.setProducts(check.get());
             shoppingCart.setQuantity(quantity);
             shoppingCartRepository.save(shoppingCart);
-
 
         }
 
