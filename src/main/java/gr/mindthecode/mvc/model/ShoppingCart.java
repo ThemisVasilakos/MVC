@@ -1,23 +1,27 @@
 package gr.mindthecode.mvc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.context.annotation.Lazy;
+
+import java.io.Serializable;
 
 @Entity
 public class ShoppingCart {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer shoppingCartId;
+    @EmbeddedId
+    private ShoppingCartPK id;
 
     @ManyToOne
     @Lazy(false)
     @MapsId("orders_id")
+    @JsonIgnore
     private Orders order;
 
     @ManyToOne
     @Lazy(false)
     @MapsId("product_id")
+    @JsonIgnore
     private Product products;
 
     private Integer quantity;
@@ -28,12 +32,13 @@ public class ShoppingCart {
 
     //Getters and Setters
 
-    public Integer getShoppingCartId() {
-        return shoppingCartId;
+
+    public ShoppingCartPK getId() {
+        return id;
     }
 
-    public void setShoppingCartId(Integer shoppingCartId) {
-        this.shoppingCartId = shoppingCartId;
+    public void setId(ShoppingCartPK id) {
+        this.id = id;
     }
 
     public Orders getOrder() {

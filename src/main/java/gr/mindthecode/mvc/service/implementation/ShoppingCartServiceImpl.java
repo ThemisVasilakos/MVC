@@ -5,6 +5,7 @@ import gr.mindthecode.mvc.dto.ProductQuantity;
 import gr.mindthecode.mvc.model.Orders;
 import gr.mindthecode.mvc.model.Product;
 import gr.mindthecode.mvc.model.ShoppingCart;
+import gr.mindthecode.mvc.model.ShoppingCartPK;
 import gr.mindthecode.mvc.repository.OrdersRepository;
 import gr.mindthecode.mvc.repository.ProductRepository;
 import gr.mindthecode.mvc.repository.ShoppingCartRepository;
@@ -34,7 +35,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public NewOrderDto createOrder(NewOrderDto newOrderDto) {
         Orders order = new Orders();
         order.setAddress(newOrderDto.getAddress());
-
+        ordersRepository.save(order);
         Double totalCost = 0.0;
 
         ArrayList<ProductQuantity> products = (ArrayList<ProductQuantity>) newOrderDto.getProducts();
@@ -48,7 +49,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             Integer quantity = products.get(i).getQuantity();
             totalCost=totalCost + (check.get().getProductPrice() * quantity);
 
+            ShoppingCartPK shoppingCartPK = new ShoppingCartPK();
+            shoppingCartPK.setOrdersId(order.getOrdersId());
+            shoppingCartPK.setProductId(check.get().getProductId());
+
             ShoppingCart shoppingCart = new ShoppingCart();
+            shoppingCart.setId(shoppingCartPK);
             shoppingCart.setOrder(order);
             shoppingCart.setProducts(check.get());
             shoppingCart.setQuantity(quantity);

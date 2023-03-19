@@ -21,7 +21,7 @@ public class Product {
     private Double productPrice;
 
 
-    @OneToMany(mappedBy = "shoppingCartId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonIgnore
     private Collection<ShoppingCart> orderProducts = new ArrayList<>();

@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 public class Test {
-
+/*
     private ProductService productService;
     private ShoppingCartService shoppingCartService;
     private ShoppingCartRepository cartRepository;
@@ -40,5 +40,5 @@ public class Test {
         return shoppingCartService.findAll();
     }
 
-
+*/
 }
