@@ -40,7 +40,7 @@ public class ProductController {
     }
     @GetMapping("/edit/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("product",  service.getProductById(id));
+        model.addAttribute("products",  service.getProductById(id));
         return "create-or-update-product";
     }
 
