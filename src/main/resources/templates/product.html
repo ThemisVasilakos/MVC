@@ -31,13 +31,13 @@
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active">E-shop</a>
+                    <a class="nav-link active"href="#">E-shop</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active">About Us</a>
+                    <a class="nav-link active" href="#">About Us</a>
                 </li>
             </ul>
 
@@ -91,12 +91,12 @@
             <td>
                 <div class="row" style="width:190px;">
                     <div class="col">
-                        <form th:action="@{/products/edit/{productId}(id=${product.productId})}" th:method="get" >
+                        <form th:action="@{/products/edit/{id}(id=${product.productId})}" th:method="get" >
                             <button type="submit" class="btn btn-light">edit</button>
                         </form>
                     </div>
                     <div class="col">
-                        <form th:action="@{/products/delete/{productId}(id=${product.productId})}" th:method="post" >
+                        <form th:action="@{/products/delete/{id}(id=${product.productId})}" th:method="post" >
                             <button type="submit" class="btn btn-danger">delete</button>
                         </form>
                     </div>
