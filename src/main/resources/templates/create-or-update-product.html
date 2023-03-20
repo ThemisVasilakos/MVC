@@ -47,12 +47,10 @@
 
     <div class="row flex-column">
 
-        <div class="col-3" th:each="product: ${products}">
-            <p th:text="'Hello, ' + ${product.productDescription} + '!'" />
-        </div>
+
 
         <form class="needs-validation" novalidate="" method="post"
-              th:attr="action=@{/products/create-or-update}"
+              th:attr="action=@{/products/create-or-update(id=${products.productId})}"
               th:object="${products}">
 
             <div class="row g-3">
