@@ -3,10 +3,11 @@ package gr.mindthecode.mvc.controller;
 import gr.mindthecode.mvc.dto.NewOrderDto;
 import gr.mindthecode.mvc.service.ProductService;
 import gr.mindthecode.mvc.service.ShoppingCartService;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@Controller
 @RequestMapping("/order")
 public class ShoppingCartController {
 
