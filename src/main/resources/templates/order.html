@@ -47,29 +47,29 @@
 
     <div class="row flex-column">
 
-        <div class="col-3" th:each="product: ${products}">
-            <p th:text="'Hello, ' + ${product.productDescription} + '!'" />
+        <div class="col-3" th:each="order: ${orders}">
+            <p th:text="'Hello, ' + ${order.orderDescription} + '!'" />
         </div>
 
         <form class="needs-validation" novalidate="" method="post"
-              th:attr="action=@{/products/create-or-update}"
-              th:object="${products}">
+              th:attr="action=@{/orders/create-or-update}"
+              th:object="${orders}">
 
             <div class="row g-3">
 
                 <div class="col-12">
-                    <label for="productDescription" class="form-label">Product Description</label>
-                    <input type="text" class="form-control" id="productDescription" th:field="*{productDescription}"
-                           placeholder=" Product description" required="required">
+                    <label for="products" class="form-label">Products</label>
+                    <input type="text" class="form-control" id="products" th:field="*{products}"
+                           placeholder="Products " required="required">
                     <div class="invalid-feedback">
-                        Please enter the product name.
+                        Please enter the order name.
                     </div>
                 </div>
 
                 <div class="col-12">
-                    <label for="productPrice" class="form-label">Product Price</label>
-                    <input type="text" class="form-control" id="productPrice" th:field="*{productPrice}"
-                           placeholder="Price" required="required">
+                    <label for="quantity" class="form-label">quantity</label>
+                    <input type="text" class="form-control" id="quantity" th:field="*{quantity}"
+                           placeholder="Quantity" required="required">
                     <div class="invalid-feedback">
                         Please enter the price.
                     </div>
@@ -79,7 +79,7 @@
 
             <hr class="my-4">
 
-            <button class="w-100 btn btn-primary btn-lg" type="submit">Proceed</button>
+            <button class="w-100 btn btn-primary btn-lg" type="submit">Checkout</button>
         </form>
 
     </div>

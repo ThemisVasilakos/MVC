@@ -49,14 +49,14 @@
 
     <div class="row mt-5">
         <div class="col-3">
-            <form id="new-product" method="get" th:attr="action=@{/products/create}">
-                <button class="btn btn-primary" type="submit" form="new-product">New Product</button>
+            <form id="new-order" method="get" th:attr="action=@{/orders/create}">
+                <button class="btn btn-primary" type="submit" form="new-order">New order</button>
             </form>
 
         </div>
         <div class="col-3">
-            <form class="d-flex" role="search" th:action="@{/products/index}" th:method="get">
-                <input th:value="${productDescription}" name="productDescription"  class="form-control me-2"
+            <form class="d-flex" role="search" th:action="@{/orders/all}" th:method="get">
+                <input th:value="${orderDescription}" name="orderDescription"  class="form-control me-2"
                        type="search" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
@@ -74,9 +74,9 @@
         <thead>
 
         <tr>
-            <th scope="col">ProductId</th>
-            <th scope="col">Description</th>
-            <th scope="col">ProductPrice</th>
+            <th scope="col">orderId</th>
+            <th scope="col">totalCost</th>
+            <th scope="col">address</th>
             <th scope="col">Options</th>
         </tr>
 
@@ -84,19 +84,19 @@
 
         <tbody>
 
-        <tr th:each="product, iStat: ${products}">
-            <th th:text="${product.productId}" scope="row"></th>
-            <td th:text="${product.productDescription}"></td>
-            <td th:text="${product.productPrice}"></td>
+        <tr th:each="order, iStat: ${orders}">
+            <th th:text="${order.orderId}" scope="row"></th>
+            <td th:text="${order.totalCost}"></td>
+            <td th:text="${order.address}"></td>
             <td>
                 <div class="row" style="width:190px;">
                     <div class="col">
-                        <form th:action="@{/products/edit/{productId}(id=${products.productId})}" th:method="get" >
+                        <form th:action="@{/orders/edit/{orderId}(id=${orders.orderId})}" th:method="get" >
                             <button type="submit" class="btn btn-light">edit</button>
                         </form>
                     </div>
                     <div class="col">
-                        <form th:action="@{/products/delete/{productId}(id=${products.productId})}" th:method="post" >
+                        <form th:action="@{/orders/delete/{orderId}(id=${orders.orderId})}" th:method="post" >
                             <button type="submit" class="btn btn-danger">delete</button>
                         </form>
                     </div>
@@ -109,29 +109,29 @@
         </tbody>
 
     </table>
-    <div class="row justify-content-between" th:if="${products.getTotalPages() > 0}">
+    <div class="row justify-content-between" th:if="${orders.getTotalPages() > 0}">
         <div class="col-3">
-            <span th:text="${'Now on ' + (products.getNumber()+1) + ' from total ' + products.getTotalPages() + ' pages'}"></span>
+            <span th:text="${'Now on ' + (orders.getNumber()+1) + ' from total ' + orders.getTotalPages() + ' pages'}"></span>
         </div>
         <div class="col-3 d-flex justify-content-end">
             <nav>
                 <ul class="pagination">
-                    <li class="page-item" th:classappend="${products.getNumber() == 0}? 'disabled'"><a class="page-link" th:href="@{/products/index(page=${products.getNumber()-1})}">Previous</a></li>
+                    <li class="page-item" th:classappend="${orders.getNumber() == 0}? 'disabled'"><a class="page-link" th:href="@{/orders/index(page=${orders.getNumber()-1})}">Previous</a></li>
 
-                    <li class="page-item" th:if="${products.getNumber() > 0}">
-                        <a class="page-link" th:href="@{/products/index(page=${products.getNumber()-1})}" th:text="${products.getNumber()}"></a>
+                    <li class="page-item" th:if="${orders.getNumber() > 0}">
+                        <a class="page-link" th:href="@{/orders/index(page=${orders.getNumber()-1})}" th:text="${orders.getNumber()}"></a>
                     </li>
 
                     <li class="page-item active">
-                        <a class="page-link" href="#" th:text="${products.getNumber()+1}"></a>
+                        <a class="page-link" href="#" th:text="${orders.getNumber()+1}"></a>
                     </li>
 
-                    <li class="page-item" th:if="${products.getNumber() < products.getTotalPages() - 1}">
-                        <a class="page-link" th:href="@{/products/index(page=${products.getNumber()+1})}" th:text="${products.getNumber()+2}"></a>
+                    <li class="page-item" th:if="${orders.getNumber() < orders.getTotalPages() - 1}">
+                        <a class="page-link" th:href="@{/orders/index(page=${orders.getNumber()+1})}" th:text="${orders.getNumber()+2}"></a>
                     </li>
 
-                    <li class="page-item" th:classappend="${products.getNumber() == products.getTotalPages() - 1}? 'disabled'">
-                        <a class="page-link" th:href="@{/products/index(page=${products.getNumber()+1})}">Next</a>
+                    <li class="page-item" th:classappend="${orders.getNumber() == orders.getTotalPages() - 1}? 'disabled'">
+                        <a class="page-link" th:href="@{/orders/index(page=${orders.getNumber()+1})}">Next</a>
                     </li>
                 </ul>
             </nav>
@@ -139,7 +139,7 @@
     </div>
 
 
-    <div class="row" th:unless="${products.getTotalPages() > 0}">
+    <div class="row" th:unless="${orders.getTotalPages() > 0}">
         <div class="col text-center"><span>No Data</span></div>
 
     </div>
