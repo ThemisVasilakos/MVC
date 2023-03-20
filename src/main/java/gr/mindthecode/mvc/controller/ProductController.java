@@ -35,7 +35,7 @@ public class ProductController {
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("product", new Product());
+        model.addAttribute("products", new Product());
         return "create-or-update-product";
     }
     @GetMapping("/edit/{id}")
@@ -53,7 +53,7 @@ public class ProductController {
     @PostMapping("/create-or-update")
     public String saveCreateForm(@RequestParam Optional<Integer> id, @ModelAttribute Product product, Model model) {
         try {
-            service.createOrUpdateProduct(id.isPresent() ? id.get() : null, product);
+            service.createOrUpdateProduct(id.isPresent() ? id.get() : null , product);
         } catch (Exception e) {
             throw new HttpClientErrorException(HttpStatusCode.valueOf(400), e.getMessage());
         }
