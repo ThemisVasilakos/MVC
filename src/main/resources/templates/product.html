@@ -91,12 +91,12 @@
             <td>
                 <div class="row" style="width:190px;">
                     <div class="col">
-                        <form th:action="@{/products/edit/{productId}(id=${product.productId})}" th:method="get" >
+                        <form th:action="@{/products/edit/{id}(id=${product.productId})}" th:method="get" >
                             <button type="submit" class="btn btn-light">edit</button>
                         </form>
                     </div>
                     <div class="col">
-                        <form th:action="@{/products/delete/{productId}(id=${product.productId})}" th:method="post" >
+                        <form th:action="@{/products/delete/{id}(id=${product.productId})}" th:method="post" >
                             <button type="submit" class="btn btn-danger">delete</button>
                         </form>
                     </div>
