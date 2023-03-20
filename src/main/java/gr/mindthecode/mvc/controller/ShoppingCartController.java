@@ -1,12 +1,9 @@
 package gr.mindthecode.mvc.controller;
 
 import gr.mindthecode.mvc.dto.NewOrderDto;
-import gr.mindthecode.mvc.model.ShoppingCart;
 import gr.mindthecode.mvc.service.ShoppingCartService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/order")
@@ -21,7 +18,7 @@ public class ShoppingCartController {
     @GetMapping("/all")
     public String orders(Model model){
 
-        model.addAttribute("orders", service.findAll());
+        model.addAttribute("order", service.findAll());
         return "order";
     }
 
