@@ -22,7 +22,8 @@
 <nav class="navbar navbar-expand-md navbar- fixed-top bg-warning">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Welcome</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
+                aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -48,12 +49,7 @@
 <main style=" margin-top: 56px;" class="container pt-5">
 
     <div class="row mt-5">
-        <div class="col-3">
-            <form id="new-order" method="get" th:attr="action=@{/order/new}">
-                <button class="btn btn-primary" type="submit" form="new-order">New Order</button>
-            </form>
 
-        </div>
         <div class="col-3">
             <form class="d-flex" role="search" th:action="@{/order/all}" th:method="get">
                 <input th:value="${orders}" name="order"  class="form-control me-2"
@@ -81,20 +77,33 @@
         </tr>
 
         </thead>
+        <thead>
+
+        <tr>
+            <th scope="col">ProductId</th>
+            <th scope="col">Description</th>
+            <th scope="col">ProductPrice</th>
+            <th scope="col">Options</th>
+        </tr>
+
+        </thead>
 
         <tbody>
 
         <tr th:each="order, iStat: ${orders}">
             <th th:text="${order.orderId}" scope="row"></th>
             <td th:text="${order.quantity}"></td>
-            <td>
+
                 <div class="row" style="width:190px;">
 
                 </div>
-
-
             </td>
         </tr>
+        <tr th:each="product, iStat: ${products}">
+            <th th:text="${product.productId}" scope="row"></th>
+            <td th:text="${product.productDescription}"></td>
+            <td th:text="${product.productPrice}"></td>
+            <td>
 
         </tbody>
 
