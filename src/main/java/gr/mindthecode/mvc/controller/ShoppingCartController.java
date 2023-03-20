@@ -1,13 +1,10 @@
 package gr.mindthecode.mvc.controller;
 
 import gr.mindthecode.mvc.dto.NewOrderDto;
-import gr.mindthecode.mvc.model.ShoppingCart;
 import gr.mindthecode.mvc.service.ProductService;
 import gr.mindthecode.mvc.service.ShoppingCartService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/order")
