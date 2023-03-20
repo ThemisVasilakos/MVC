@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProductRepository extends JpaRepository<Product,Integer> {
     Page<Product> findByProductPrice(Double price, Pageable pageable);
+    Product findByProductId(Integer id);
 
 }
