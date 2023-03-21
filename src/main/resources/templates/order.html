@@ -70,7 +70,7 @@
             <td>
                 <div class="row" style="width:190px;">
                     <div class="col">
-                        <form th:action="@{/products/edit/{id}(id=${product.productId})}" th:method="get" >
+                        <form th:action="@{/order/add/{id}(id=${product.productId})}" th:method="get" >
                             <button type="submit" class="btn btn-light">Add to Cart</button>
                         </form>
                     </div>
@@ -78,9 +78,15 @@
 
         </tbody>
 
-
     </table>
 
+    <div class="row" style="width:190px;">
+        <div class="col">
+            <form th:action="@{/order/create}" th:method="post" >
+                <button type="submit" class="w-100 btn btn-primary btn-lg">Send Order</button>
+            </form>
+        </div>
+    </div>
 
 </main>
 </body>
