@@ -57,4 +57,5 @@ public class Orders {
     public void setOrderProducts(Collection<ShoppingCart> orderProducts) {
         this.orderProducts = orderProducts;
     }
+
 }

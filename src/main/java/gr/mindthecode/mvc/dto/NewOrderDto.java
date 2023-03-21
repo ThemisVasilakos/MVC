@@ -29,4 +29,8 @@ public class NewOrderDto implements Serializable {
     public void setProducts(Collection<ProductQuantity> products) {
         this.products = products;
     }
+
+    public String toString(){//overriding the toString() method
+        return "Address: "+address+"  Products: "+products;
+    }
 }

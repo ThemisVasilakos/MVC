@@ -1,6 +1,9 @@
 package gr.mindthecode.mvc.controller;
 
 import gr.mindthecode.mvc.dto.NewOrderDto;
+import gr.mindthecode.mvc.dto.ProductQuantity;
+import gr.mindthecode.mvc.model.Product;
+import gr.mindthecode.mvc.service.OrderService;
 import gr.mindthecode.mvc.service.ProductService;
 import gr.mindthecode.mvc.service.ShoppingCartService;
 import org.springframework.stereotype.Controller;
@@ -13,10 +16,13 @@ public class ShoppingCartController {
 
     private ShoppingCartService shoppingCartService;
     private ProductService productService;
+    private OrderService orderService;
 
-    public ShoppingCartController(ShoppingCartService shoppingCartService,ProductService productService) {
+    public ShoppingCartController(ShoppingCartService shoppingCartService,ProductService productService,
+                                  OrderService orderService) {
         this.shoppingCartService = shoppingCartService;
         this.productService = productService;
+        this.orderService=orderService;
     }
 
     @GetMapping("/new")
@@ -30,13 +36,36 @@ public class ShoppingCartController {
         model.addAttribute("products", productService.getProducts(productPrice, page, size, sort));
         model.addAttribute("sort", sort);
         model.addAttribute("productDescription ", productPrice );
+
+        model.addAttribute("address",new  NewOrderDto());
+
         return "order";
     }
 
+    @GetMapping("/add/{id}")
+    public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
+        model.addAttribute("products",  productService.getProductById(id));
+        model.addAttribute("address",new  NewOrderDto());
+
+        Product product = (Product) model.getAttribute("products");
+
+        shoppingCartService.addProductQuantity(product.getProductId());
+
+        return "redirect:/order/new";
+    }
+
     @PostMapping("/create")
-    public String createOrder(@RequestBody NewOrderDto newOrderDto, Model model) throws Exception {
-        model.addAttribute("order",shoppingCartService.createOrder(newOrderDto));
-        return "redirect:/order/all";
+    public String createOrder(@ModelAttribute NewOrderDto newOrderDto ,Model model) throws Exception {
+        model.addAttribute("address",new NewOrderDto());
+
+        shoppingCartService.buildNewOrderDto(newOrderDto.getAddress(),shoppingCartService.getProductQuantity());
+        model.addAttribute("order",shoppingCartService.createOrder(shoppingCartService.getNewOrderDto()));
+
+        model.addAttribute("orders", orderService.findAll());
+
+        shoppingCartService.reset();
+
+        return "cart";
     }
 
 
