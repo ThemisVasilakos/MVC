@@ -55,8 +55,9 @@
         <tr>
             <th scope="col">ProductId</th>
             <th scope="col">Description</th>
-            <th scope="col">ProductPrice</th>
+            <th scope="col">Product Price</th>
             <th scope="col">Options</th>
+
         </tr>
 
         </thead>
@@ -67,38 +68,48 @@
             <th th:text="${product.productId}" scope="row"></th>
             <td th:text="${product.productDescription}"></td>
             <td th:text="${product.productPrice}"></td>
+
+
             <td>
-                <div class="row" style="width:190px;">
+                <div class="row" style="width:100px;">
                     <div class="col">
                         <form th:action="@{/order/add/{id}(id=${product.productId})}" th:method="get" >
-                            <button type="submit" class="btn btn-light">Add to Cart</button>
+                            <button type="submit" class="btn btn-light">Add</button>
                         </form>
                     </div>
                 </div>
+            </td>
+
+        </tr>
 
         </tbody>
 
     </table>
 
+    <table>
+        <tr>
+
     <form class="row" style="width:190px;" novalidate="" method="post"
           th:attr="action=@{/order/create}"
           th:object="${address}">
-
+        <th>
             <div class="col-12">
-                <label for="address" class="form-label">Address</label>
+
                 <input type="text" class="form-control" id="address" th:field="*{address}"
                        placeholder="Address" required="required">
                 <div class="invalid-feedback">
                     Please enter the order's address.
                 </div>
             </div>
+        </th>
 
-        </div>
-
-        <hr class="my-4">
-        <button class="w-100 btn btn-primary btn-lg" type="submit">Send Order</button>
+        <th>
+            <button class="w-10 btn btn-primary btn-lg" type="submit">Send Order</button>
+        </th>
     </form>
 
+        </tr>
+    </table>
 </main>
 </body>
 </html>

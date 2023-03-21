@@ -1,5 +1,6 @@
 package gr.mindthecode.mvc.service.implementation;
 
+import gr.mindthecode.mvc.dto.DisplayProductDto;
 import gr.mindthecode.mvc.dto.NewOrderDto;
 import gr.mindthecode.mvc.dto.ProductQuantity;
 import gr.mindthecode.mvc.model.Orders;
@@ -77,10 +78,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void addProductQuantity(Integer id) {
+        //Check if product exist already
+        List<ProductQuantity> search = this.productQuantity.stream().toList();
+        for(int i=0;i<search.size();i++){
+
+            if(search.get(i).getProductId()==id){
+                search.get(i).setQuantity(search.get(i).getQuantity()+1);
+                return;
+            }
+        }
         ProductQuantity tmp = new ProductQuantity();
         tmp.setProductId(id);
         tmp.setQuantity(1);
-
         this.productQuantity.add(tmp);
     }
 
@@ -109,4 +118,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public void reset() {
         this.productQuantity.clear();
     }
+
+
 }
