@@ -1,5 +1,6 @@
 package gr.mindthecode.mvc.controller;
 
+import gr.mindthecode.mvc.dto.AddressDto;
 import gr.mindthecode.mvc.dto.NewOrderDto;
 import gr.mindthecode.mvc.model.Product;
 import gr.mindthecode.mvc.service.OrderService;
@@ -35,12 +36,14 @@ public class ShoppingCartController {
         model.addAttribute("products", productService.getProducts(productPrice, page, size, sort));
         model.addAttribute("sort", sort);
         model.addAttribute("productDescription ", productPrice );
+        model.addAttribute("address",new  AddressDto());
         return "order";
     }
 
     @GetMapping("/add/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         model.addAttribute("products",  productService.getProductById(id));
+        model.addAttribute("address",new  AddressDto());
 
         Product product = (Product) model.getAttribute("products");
 
@@ -50,11 +53,12 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/create")
-    public String createOrder(Model model) throws Exception {
-        shoppingCartService.buildNewOrderDto("my address",shoppingCartService.getProductQuantity());
+    public String createOrder(@ModelAttribute AddressDto addressDto ,Model model) throws Exception {
+        model.addAttribute("address",new  AddressDto());
+
+        shoppingCartService.buildNewOrderDto(addressDto.getAddress(),shoppingCartService.getProductQuantity());
         model.addAttribute("order",shoppingCartService.createOrder(shoppingCartService.getNewOrderDto()));
 
-        System.out.println(shoppingCartService.getNewOrderDto());
 
         model.addAttribute("orders", orderService.findAll());
 

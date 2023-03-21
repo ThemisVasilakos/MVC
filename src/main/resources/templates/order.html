@@ -80,13 +80,24 @@
 
     </table>
 
-    <div class="row" style="width:190px;">
-        <div class="col">
-            <form th:action="@{/order/create}" th:method="post" >
-                <button type="submit" class="w-100 btn btn-primary btn-lg">Send Order</button>
-            </form>
+    <form class="row" style="width:190px;" novalidate="" method="post"
+          th:attr="action=@{/order/create}"
+          th:object="${address}">
+
+            <div class="col-12">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" id="address" th:field="*{address}"
+                       placeholder="Address" required="required">
+                <div class="invalid-feedback">
+                    Please enter the order's address.
+                </div>
+            </div>
+
         </div>
-    </div>
+
+        <hr class="my-4">
+        <button class="w-100 btn btn-primary btn-lg" type="submit">Send Order</button>
+    </form>
 
 </main>
 </body>
