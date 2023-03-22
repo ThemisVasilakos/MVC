@@ -27,15 +27,15 @@ public class ShoppingCartController {
 
     @GetMapping("/new")
     public String getItems(
-            @RequestParam(required = false) Double productPrice,
+            @RequestParam(required = false) String productDescription,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "ASC", required = false) String sort,
             Model model
     ) {
-        model.addAttribute("products", productService.getProducts(productPrice, page, size, sort));
+        model.addAttribute("products", productService.getProducts(productDescription, page, size, sort));
         model.addAttribute("sort", sort);
-        model.addAttribute("productDescription ", productPrice );
+        model.addAttribute("productDescription ", productDescription );
 
         model.addAttribute("address",new  NewOrderDto());
 
