@@ -16,6 +16,11 @@
         function onSortChange(e) {
             location.search = '?sort=' + e.value;
         }
+
+        function orderCreate() {
+            alert ("Order Created Successfully!!");
+        }
+
     </script>
 </head>
 <body>
@@ -48,6 +53,31 @@
 
 <main style=" margin-top: 56px;" class="container pt-5">
 
+    <div class="row mt-5">
+        <div class="col-3">
+            <form class="d-flex" role="search" th:action="@{/order/new}" th:method="get">
+                <input th:value="${productDescription}" name="productDescription"  class="form-control me-2"
+                       type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="col-3">
+            <div >
+                <form id="all-orders" method="get" th:attr="action=@{/order/all}">
+                    <button class="btn btn-primary" type="submit" form="all-orders">All Orders</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-3 offset-3">
+            <select th:onchange="'onSortChange(this)'"; class="form-select" aria-label="Default select example">
+                <option th:selected="${sort == 'ASC'}"  value="ASC">Sort by Price: Ascending</option>
+                <option th:selected="${sort == 'DESC'}" value="DESC">Sort by Price: Descending</option>
+            </select>
+        </div>
+    </div>
+
     <table class="table table-hover">
 
         <thead>
@@ -57,6 +87,7 @@
             <th scope="col">Description</th>
             <th scope="col">Product Price</th>
             <th scope="col">Options</th>
+            <th scope="col">Quantity</th>
 
         </tr>
 
@@ -79,6 +110,8 @@
                     </div>
                 </div>
             </td>
+
+            <td th:text="${product.orderQuantity}"></td>
 
         </tr>
 
@@ -104,12 +137,50 @@
         </th>
 
         <th>
-            <button class="w-10 btn btn-primary btn-lg" type="submit">Send Order</button>
+            <button class="w-10 btn btn-primary btn-lg" type="submit" onclick="orderCreate()">Send Order</button>
         </th>
     </form>
 
         </tr>
     </table>
+
+
+    </table>
+    <div class="row justify-content-between" th:if="${products.getTotalPages() > 0}">
+        <div class="col-3">
+            <span th:text="${'Now on ' + (products.getNumber()+1) + ' from total ' + products.getTotalPages() + ' pages'}"></span>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${products.getNumber() == 0}? 'disabled'"><a class="page-link" th:href="@{/products/index(page=${products.getNumber()-1})}">Previous</a></li>
+
+                    <li class="page-item" th:if="${products.getNumber() > 0}">
+                        <a class="page-link" th:href="@{/order/new(page=${products.getNumber()-1})}" th:text="${products.getNumber()}"></a>
+                    </li>
+
+                    <li class="page-item active">
+                        <a class="page-link" href="#" th:text="${products.getNumber()+1}"></a>
+                    </li>
+
+                    <li class="page-item" th:if="${products.getNumber() < products.getTotalPages() - 1}">
+                        <a class="page-link" th:href="@{/order/new(page=${products.getNumber()+1})}" th:text="${products.getNumber()+2}"></a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${products.getNumber() == products.getTotalPages() - 1}? 'disabled'">
+                        <a class="page-link" th:href="@{/order/new(page=${products.getNumber()+1})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="row" th:unless="${products.getTotalPages() > 0}">
+        <div class="col text-center"><span>No Data</span></div>
+
+    </div>
+
 </main>
 </body>
 </html>

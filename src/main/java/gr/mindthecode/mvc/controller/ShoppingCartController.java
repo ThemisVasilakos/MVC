@@ -1,8 +1,6 @@
 package gr.mindthecode.mvc.controller;
 
 import gr.mindthecode.mvc.dto.NewOrderDto;
-import gr.mindthecode.mvc.dto.ProductQuantity;
-import gr.mindthecode.mvc.model.Product;
 import gr.mindthecode.mvc.service.OrderService;
 import gr.mindthecode.mvc.service.ProductService;
 import gr.mindthecode.mvc.service.ShoppingCartService;
@@ -27,15 +25,15 @@ public class ShoppingCartController {
 
     @GetMapping("/new")
     public String getItems(
-            @RequestParam(required = false) Double productPrice,
+            @RequestParam(required = false) String productDescription,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "ASC", required = false) String sort,
             Model model
     ) {
-        model.addAttribute("products", productService.getProducts(productPrice, page, size, sort));
+        model.addAttribute("products", productService.getProducts(productDescription, page, size, sort));
         model.addAttribute("sort", sort);
-        model.addAttribute("productDescription ", productPrice );
+        model.addAttribute("productDescription ", productDescription );
 
         model.addAttribute("address",new  NewOrderDto());
 
@@ -47,9 +45,7 @@ public class ShoppingCartController {
         model.addAttribute("products",  productService.getProductById(id));
         model.addAttribute("address",new  NewOrderDto());
 
-        Product product = (Product) model.getAttribute("products");
-
-        shoppingCartService.addProductQuantity(product.getProductId());
+        shoppingCartService.addProductQuantity(productService.getProductById(id).getProductId());
 
         return "redirect:/order/new";
     }
@@ -64,6 +60,21 @@ public class ShoppingCartController {
         model.addAttribute("orders", orderService.findAll());
 
         shoppingCartService.reset();
+
+        return "redirect:/order/new";
+    }
+
+    @GetMapping("/all")
+    public String getOrders(
+            @RequestParam(required = false) String address,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size,
+            @RequestParam(defaultValue = "ASC", required = false) String sort,
+            Model model
+    ) {
+        model.addAttribute("orders",orderService.getOrders(address,page,size,sort));
+        model.addAttribute("sort", sort);
+        model.addAttribute("address ", address );
 
         return "cart";
     }

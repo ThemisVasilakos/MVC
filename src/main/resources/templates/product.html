@@ -54,6 +54,7 @@
             </form>
 
         </div>
+
         <div class="col-3">
             <form class="d-flex" role="search" th:action="@{/products/index}" th:method="get">
                 <input th:value="${productDescription}" name="productDescription"  class="form-control me-2"
@@ -61,6 +62,7 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
         </div>
+
         <div class="col-3 offset-3">
             <select th:onchange="'onSortChange(this)'"; class="form-select" aria-label="Default select example">
                 <option th:selected="${sort == 'ASC'}"  value="ASC">Sort by Price: Ascending</option>

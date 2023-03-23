@@ -1,6 +1,5 @@
 package gr.mindthecode.mvc.service.implementation;
 
-import gr.mindthecode.mvc.dto.DisplayProductDto;
 import gr.mindthecode.mvc.model.Product;
 import gr.mindthecode.mvc.repository.ProductRepository;
 import gr.mindthecode.mvc.service.ProductService;
@@ -9,19 +8,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
-    private List<DisplayProductDto> productDtos;
 
     public ProductServiceImpl(ProductRepository productRepository) {
 
         this.productRepository = productRepository;
-        this.productDtos = new ArrayList<>();
     }
 
     @Override
@@ -46,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Page<Product> getProducts(Double productPrice, int page, int size, String sort) {
+    public Page<Product> getProducts(String description, int page, int size, String sort) {
         PageRequest paging = PageRequest
                 .of(page, size)
                 .withSort(sort.equalsIgnoreCase("ASC") ?
@@ -54,10 +48,10 @@ public class ProductServiceImpl implements ProductService {
                         Sort.by("productPrice").descending());
 
         Page<Product> res;
-        if (productPrice == null) {
+        if (description == null) {
             res = productRepository.findAll(paging);
         } else {
-            res = productRepository.findByProductPrice(productPrice, paging);
+            res = productRepository.findByProductDescriptionContaining(description,paging);
         }
 
         return res;

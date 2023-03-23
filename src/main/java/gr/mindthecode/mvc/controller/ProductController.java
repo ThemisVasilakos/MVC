@@ -21,15 +21,15 @@ public class ProductController {
 
     @GetMapping("/index")
     public String greeting(
-            @RequestParam(required = false) Double productPrice,
+            @RequestParam(required = false) String productDescription,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size,
             @RequestParam(defaultValue = "ASC", required = false) String sort,
             Model model
     ) {
-        model.addAttribute("products", service.getProducts(productPrice, page, size, sort));
+        model.addAttribute("products", service.getProducts(productDescription, page, size, sort));
         model.addAttribute("sort", sort);
-        model.addAttribute("productDescription ", productPrice );
+        model.addAttribute("productDescription ", productDescription );
         return "product";
     }
 
@@ -52,6 +52,8 @@ public class ProductController {
 
     @PostMapping("/create-or-update")
     public String saveCreateForm(@RequestParam Optional<Integer> id, @ModelAttribute Product product, Model model) {
+        //System.out.println("id:" + id);
+        //System.out.println("product id:" + product.getProductId());
         try {
             service.createOrUpdateProduct(id.isPresent() ? id.get() : null , product);
         } catch (Exception e) {

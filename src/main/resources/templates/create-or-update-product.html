@@ -51,7 +51,7 @@
 
 
         <form class="needs-validation" novalidate="" method="post"
-              th:attr="action=@{/products/create-or-update(id=${products.productId})}"
+              th:attr="action=@{/products/create-or-update(productId=${products.productId})}"
               th:object="${products}">
 
             <div class="row g-3">
