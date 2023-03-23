@@ -13,8 +13,6 @@
             crossorigin="anonymous"></script>
 
     <script>
-        var nativeNR = 0;
-
         function onSortChange(e) {
             location.search = '?sort=' + e.value;
         }
@@ -89,6 +87,7 @@
             <th scope="col">Description</th>
             <th scope="col">Product Price</th>
             <th scope="col">Options</th>
+            <th scope="col">Quantity</th>
 
         </tr>
 
@@ -106,11 +105,13 @@
                 <div class="row" style="width:100px;">
                     <div class="col">
                         <form th:action="@{/order/add/{id}(id=${product.productId})}" th:method="get" >
-                            <button type="submit" class="btn btn-light" >Add</button>
+                            <button type="submit" class="btn btn-light">Add</button>
                         </form>
                     </div>
                 </div>
             </td>
+
+            <td th:text="${product.orderQuantity}"></td>
 
         </tr>
 

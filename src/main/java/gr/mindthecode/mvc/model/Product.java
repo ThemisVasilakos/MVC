@@ -26,6 +26,8 @@ public class Product {
     @JsonIgnore
     private Collection<ShoppingCart> orderProducts = new ArrayList<>();
 
+    private Integer orderQuantity=0;
+
     //Constructor
     public Product() {
     }
@@ -61,5 +63,13 @@ public class Product {
 
     public void setOrderProducts(Collection<ShoppingCart> orderProducts) {
         this.orderProducts = orderProducts;
+    }
+
+    public Integer getOrderQuantity() {
+        return orderQuantity;
+    }
+
+    public void setOrderQuantity(Integer orderQuantity) {
+        this.orderQuantity = orderQuantity;
     }
 }
