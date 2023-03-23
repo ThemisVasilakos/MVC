@@ -1,7 +1,6 @@
 package gr.mindthecode.mvc.controller;
 
 import gr.mindthecode.mvc.dto.NewOrderDto;
-import gr.mindthecode.mvc.dto.ProductQuantity;
 import gr.mindthecode.mvc.model.Product;
 import gr.mindthecode.mvc.service.OrderService;
 import gr.mindthecode.mvc.service.ProductService;
@@ -35,7 +34,7 @@ public class ShoppingCartController {
     ) {
         model.addAttribute("products", productService.getProducts(productPrice, page, size, sort));
         model.addAttribute("sort", sort);
-        model.addAttribute("productDescription ", productPrice );
+        model.addAttribute("productPrice ", productPrice );
 
         model.addAttribute("address",new  NewOrderDto());
 
