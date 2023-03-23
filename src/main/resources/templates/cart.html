@@ -16,6 +16,7 @@
         function onSortChange(e) {
             location.search = '?sort=' + e.value;
         }
+
     </script>
 </head>
 <body>
@@ -48,6 +49,23 @@
 
 <main style=" margin-top: 56px;" class="container pt-5">
 
+    <div class="row mt-5">
+        <div class="col-3">
+            <form class="d-flex" role="search" th:action="@{/order/all}" th:method="get">
+                <input th:value="${address}" name="address"  class="form-control me-2"
+                       type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+        </div>
+
+        <div class="col-3 offset-3">
+            <select th:onchange="'onSortChange(this)'"; class="form-select" aria-label="Default select example">
+                <option th:selected="${sort == 'ASC'}"  value="ASC">Sort by Total Price: Ascending</option>
+                <option th:selected="${sort == 'DESC'}" value="DESC">Sort by Total Price: Descending</option>
+            </select>
+        </div>
+    </div>
+
     <table class="table table-hover">
 
         <thead>
@@ -77,9 +95,44 @@
     <div class="row" style="width:190px;">
         <div class="col">
             <form th:action="@{/order/new}" th:method="get" >
-                <button type="submit" class="btn btn-light">New Order</button>
+                <button type="submit" class="btn btn-primary">New Order</button>
             </form>
         </div>
+    </div>
+
+    <div class="row justify-content-between" th:if="${orders.getTotalPages() > 0}">
+        <div class="col-3">
+            <span th:text="${'Now on ' + (orders.getNumber()+1) + ' from total ' + orders.getTotalPages() + ' pages'}"></span>
+        </div>
+        <div class="col-3 d-flex justify-content-end">
+            <nav>
+                <ul class="pagination">
+                    <li class="page-item" th:classappend="${orders.getNumber() == 0}? 'disabled'"><a class="page-link" th:href="@{/orders/all(page=${orders.getNumber()-1})}">Previous</a></li>
+
+                    <li class="page-item" th:if="${orders.getNumber() > 0}">
+                        <a class="page-link" th:href="@{/order/all(page=${orders.getNumber()-1})}" th:text="${orders.getNumber()}"></a>
+                    </li>
+
+                    <li class="page-item active">
+                        <a class="page-link" href="#" th:text="${orders.getNumber()+1}"></a>
+                    </li>
+
+                    <li class="page-item" th:if="${orders.getNumber() < orders.getTotalPages() - 1}">
+                        <a class="page-link" th:href="@{/order/all(page=${orders.getNumber()+1})}" th:text="${orders.getNumber()+2}"></a>
+                    </li>
+
+                    <li class="page-item" th:classappend="${orders.getNumber() == orders.getTotalPages() - 1}? 'disabled'">
+                        <a class="page-link" th:href="@{/order/all(page=${orders.getNumber()+1})}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+
+    <div class="row" th:unless="${orders.getTotalPages() > 0}">
+        <div class="col text-center"><span>No Data</span></div>
+
     </div>
 
 </main>

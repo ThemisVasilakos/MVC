@@ -1,6 +1,5 @@
 package gr.mindthecode.mvc.service.implementation;
 
-import gr.mindthecode.mvc.dto.DisplayProductDto;
 import gr.mindthecode.mvc.dto.NewOrderDto;
 import gr.mindthecode.mvc.dto.ProductQuantity;
 import gr.mindthecode.mvc.model.Orders;
